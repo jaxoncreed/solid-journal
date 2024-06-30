@@ -1,19 +1,27 @@
-import { useLdo, useResource } from "@ldo/solid-react";
-import { Leaf, Resource } from "@ldo/solid";
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { useLdo } from "@ldo/solid-react";
+import { Leaf, Container } from "@ldo/solid";
+import { FunctionComponent, useMemo, useState } from "react";
 import { displayError } from "../actions/displayError";
-
-// Container
-// Article
-// Unknown
+import useAsyncEffect from "use-async-effect";
+import { ContainerView } from "./containerView/ContainerView";
+import { SubjectRouter } from "./SubjectRouter";
 
 export const ViewRouter: FunctionComponent = () => {
-  const currentLoaction = window.location.href;
+  const currentLoaction = useMemo(() => {
+    if (process.env.REACT_APP_POD_PROTOCOL && process.env.REACT_APP_POD_HOST) {
+      const hrefUrl = new URL(window.location.href);
+      hrefUrl.protocol = process.env.REACT_APP_POD_PROTOCOL;
+      hrefUrl.host = process.env.REACT_APP_POD_HOST;
+      return hrefUrl.toString();
+    }
+    return window.location.href;
+  }, []);
   const { getResource } = useLdo();
-  const [mainResource, setMainResource] = useState<Resource | undefined>(
-    undefined
-  );
-  const currentSubject = useMemo(async () => {
+  const [mainResource, setMainResource] = useState<
+    Leaf | Container | undefined
+  >(undefined);
+
+  useAsyncEffect(async () => {
     // Get the Current Resource
     const currentResource = getResource(currentLoaction);
     const currentResourceReadResult = await currentResource.read();
@@ -33,7 +41,7 @@ export const ViewRouter: FunctionComponent = () => {
         setMainResource(currentResource);
         return;
       }
-      const indexChildReadResult = await currentResource.read();
+      const indexChildReadResult = await indexChild.read();
       if (indexChildReadResult.isError) {
         displayError(indexChildReadResult);
         return;
@@ -45,13 +53,13 @@ export const ViewRouter: FunctionComponent = () => {
     // Get the subject of the main resource
   }, [currentLoaction, getResource]);
 
-  useEffect(() => {
-    // Get the current URI
-    // Get the main "subject" of this!
-    // If it's a container
-    // See if there's an index.ttl
-    // If it's a
-  });
+  if (!mainResource) {
+    return <h1>Loading...</h1>;
+  }
 
-  return <></>;
+  if (mainResource?.type === "container") {
+    return <ContainerView conatiner={mainResource} />;
+  }
+
+  return <SubjectRouter uri={mainResource.uri} />;
 };

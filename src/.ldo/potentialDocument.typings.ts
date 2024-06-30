@@ -12,7 +12,19 @@ import { ContextDefinition } from "jsonld";
 export interface PotentialObject {
   "@id"?: string;
   "@context"?: ContextDefinition;
-  primaryTopic?: {
+  type?: {
+    "@id": string;
+  };
+  primaryTopic?: PotententialSubject;
+}
+
+/**
+ * PotententialSubject Type
+ */
+export interface PotententialSubject {
+  "@id"?: string;
+  "@context"?: ContextDefinition;
+  type?: {
     "@id": string;
   };
 }

@@ -29,5 +29,5 @@ export const SubjectRouter: FunctionComponent<SubjectRouterProps> = ({
     }
     return <Component subject={potentialMainSubject} />;
   }, [resourceSubject]);
-  return <div>{mainComponent}</div>;
+  return <>{mainComponent}</>;
 };

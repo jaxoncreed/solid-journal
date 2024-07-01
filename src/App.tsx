@@ -7,7 +7,14 @@ import { Layout } from "./layout/Layout";
 function App() {
   return (
     <BrowserSolidLdoProvider>
-      <ConfigProvider>
+      <ConfigProvider
+        theme={{
+          token: {
+            fontSize: 14,
+            fontSizeIcon: 10,
+            colorPrimary: "#000",
+          },
+        }}>
         <Layout />
       </ConfigProvider>
     </BrowserSolidLdoProvider>

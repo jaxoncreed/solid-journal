@@ -5,7 +5,13 @@ import { ViewRouter } from "../views/ViewRouter";
 
 export const Layout: FunctionComponent = () => {
   return (
-    <AntdLayout style={{ backgroundColor: "#FFF" }}>
+    <AntdLayout
+      style={{
+        backgroundColor: "#FFF",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}>
       <header>
         <Flex justify="space-between" align="center" style={{ padding: 8 }}>
           <Flex align="center">
@@ -21,7 +27,8 @@ export const Layout: FunctionComponent = () => {
           <Button type="text" shape="circle" icon={<LoginOutlined />} />
         </Flex>
       </header>
-      <AntdLayout.Content>
+      <AntdLayout.Content
+        style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <ViewRouter />
       </AntdLayout.Content>
     </AntdLayout>

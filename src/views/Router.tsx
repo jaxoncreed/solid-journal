@@ -5,8 +5,14 @@ import { displayError } from "../actions/displayError";
 import useAsyncEffect from "use-async-effect";
 import { ContainerView } from "./containerView/ContainerView";
 import { SubjectRouter } from "./SubjectRouter";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useLocation,
+} from "react-router-dom";
 
-export const ViewRouter: FunctionComponent = () => {
+const ViewRouter: FunctionComponent = () => {
+  const location = useLocation();
   const currentLoaction = useMemo(() => {
     if (process.env.REACT_APP_POD_PROTOCOL && process.env.REACT_APP_POD_HOST) {
       const hrefUrl = new URL(window.location.href);
@@ -15,7 +21,8 @@ export const ViewRouter: FunctionComponent = () => {
       return hrefUrl.toString();
     }
     return window.location.href;
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
   const { getResource } = useLdo();
   const [mainResource, setMainResource] = useState<
     Leaf | Container | undefined
@@ -62,4 +69,15 @@ export const ViewRouter: FunctionComponent = () => {
   }
 
   return <SubjectRouter uri={mainResource.uri} />;
+};
+
+const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <ViewRouter />,
+  },
+]);
+
+export const Router: FunctionComponent = () => {
+  return <RouterProvider router={router} />;
 };

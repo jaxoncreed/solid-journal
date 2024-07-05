@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Layout as AntdLayout, Button, Flex } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
-import { ViewRouter } from "../views/ViewRouter";
+import { Router } from "../views/Router";
 
 export const Layout: FunctionComponent = () => {
   return (
@@ -29,7 +29,7 @@ export const Layout: FunctionComponent = () => {
       </header>
       <AntdLayout.Content
         style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <ViewRouter />
+        <Router />
       </AntdLayout.Content>
     </AntdLayout>
   );

@@ -1,9 +1,10 @@
 import { useResource, useSubject } from "@ldo/solid-react";
 import { Link } from "../../.ldo/activityPub.typings";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useMemo } from "react";
 import { Card, Skeleton, Typography } from "antd";
 import { PotentialSubjectShapeType } from "../../.ldo/potentialDocument.shapeTypes";
 import { PREVIEW_CATALOGUE } from "./previews/PreviewCatalogue";
+import { useNavigate } from "react-router-dom";
 
 interface OrderedCollectionCardProps {
   item: Link;
@@ -14,9 +15,18 @@ export const OrderedCollectionCard: FunctionComponent<
 > = ({ item }) => {
   const itemResource = useResource(item.href);
   const itemSubject = useSubject(PotentialSubjectShapeType, item.href);
+  const navigate = useNavigate();
+  const pathAndHash = useMemo(() => {
+    if (!item.href) return "/";
+    const url = new URL(item.href);
+    return `${url.pathname}${url.search}${url.hash}`;
+  }, [item]);
 
   return (
-    <Card style={{ height: 150 }} hoverable>
+    <Card
+      style={{ height: 150, overflow: "hidden" }}
+      hoverable
+      onClick={() => navigate(pathAndHash)}>
       {(() => {
         if (!itemResource) {
           return (
@@ -28,7 +38,6 @@ export const OrderedCollectionCard: FunctionComponent<
           return <Skeleton active paragraph={{ rows: 3 }} title={false} />;
         }
 
-        console.log(itemSubject?.type?.["@id"]);
         const Component = PREVIEW_CATALOGUE[itemSubject?.type?.["@id"] || ""];
         if (!Component) {
           return (

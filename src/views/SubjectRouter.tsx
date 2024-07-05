@@ -2,7 +2,7 @@ import { useSubject } from "@ldo/solid-react";
 import { FunctionComponent, useMemo } from "react";
 import { PotentialObjectShapeType } from "../.ldo/potentialDocument.shapeTypes";
 import {
-  PotententialSubject,
+  PotentialSubject,
   PotentialObject,
 } from "../.ldo/potentialDocument.typings";
 import { VIEW_CATALOGUE } from "./ViewCatalogue";
@@ -17,13 +17,12 @@ export const SubjectRouter: FunctionComponent<SubjectRouterProps> = ({
 }) => {
   const resourceSubject = useSubject(PotentialObjectShapeType, uri);
   const mainComponent = useMemo(() => {
-    let potentialMainSubject: PotentialObject | PotententialSubject =
+    let potentialMainSubject: PotentialObject | PotentialSubject =
       resourceSubject;
     if (resourceSubject.primaryTopic) {
       potentialMainSubject = resourceSubject.primaryTopic;
     }
     const Component = VIEW_CATALOGUE[potentialMainSubject?.type?.["@id"] || ""];
-    console.log(potentialMainSubject.type?.["@id"]);
     if (!Component) {
       return <UnknownView />;
     }

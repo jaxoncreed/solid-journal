@@ -1,5 +1,5 @@
-import { PotententialSubject } from "../.ldo/potentialDocument.typings";
+import { PotentialSubject } from "../.ldo/potentialDocument.typings";
 
 export interface ViewProps {
-  subject?: PotententialSubject;
+  subject?: PotentialSubject;
 }

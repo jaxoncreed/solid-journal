@@ -54,7 +54,7 @@ export const ViewRouter: FunctionComponent = () => {
   }, [currentLoaction, getResource]);
 
   if (!mainResource) {
-    return <h1>Loading...</h1>;
+    return <></>;
   }
 
   if (mainResource?.type === "container") {

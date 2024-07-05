@@ -15,13 +15,13 @@ export interface PotentialObject {
   type?: {
     "@id": string;
   };
-  primaryTopic?: PotententialSubject;
+  primaryTopic?: PotentialSubject;
 }
 
 /**
- * PotententialSubject Type
+ * PotentialSubject Type
  */
-export interface PotententialSubject {
+export interface PotentialSubject {
   "@id"?: string;
   "@context"?: ContextDefinition;
   type?: {

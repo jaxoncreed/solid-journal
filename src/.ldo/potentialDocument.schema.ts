@@ -30,7 +30,7 @@ export const potentialDocumentSchema: Schema = {
               type: "TripleConstraint",
               predicate: "http://xmlns.com/foaf/0.1/primaryTopic",
               valueExpr:
-                "https://shaperepo.com/schemas/activitystreams#PotententialSubject",
+                "https://shaperepo.com/schemas/activitystreams#PotentialSubject",
               min: 0,
               max: 1,
             },
@@ -40,7 +40,7 @@ export const potentialDocumentSchema: Schema = {
       },
     },
     {
-      id: "https://shaperepo.com/schemas/activitystreams#PotententialSubject",
+      id: "https://shaperepo.com/schemas/activitystreams#PotentialSubject",
       type: "ShapeDecl",
       shapeExpr: {
         type: "Shape",

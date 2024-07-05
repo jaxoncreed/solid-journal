@@ -1,4 +1,4 @@
-import { Affix, Flex } from "antd";
+import { Affix } from "antd";
 import { FunctionComponent } from "react";
 import { ContentMenuBar } from "./ContentMenuBar";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -6,6 +6,8 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import { useWindowSize } from "@uidotdev/usehooks";
+import "./Editor.css";
+import { CenteredArea } from "../../../layout/CenteredArea";
 
 const extensions = [
   StarterKit,
@@ -76,23 +78,13 @@ export const ArticleContent: FunctionComponent<ArticleContentProps> = () => {
   if (!editor) return <></>;
 
   return (
-    <>
-      <Flex
-        justify="center"
-        style={{ flex: 1, marginRight: width && width < 670 ? 88 : 0 }}>
-        <Flex
-          vertical
-          style={{
-            maxWidth: 680,
-            flex: 1,
-            padding: 8,
-          }}>
-          <Affix offsetTop={0}>
-            <ContentMenuBar editor={editor} />
-          </Affix>
-          <EditorContent editor={editor} style={{ flex: 1 }} />
-        </Flex>
-      </Flex>
-    </>
+    <CenteredArea>
+      <Affix
+        offsetTop={0}
+        style={{ marginRight: width && width < 670 ? 88 : 0 }}>
+        <ContentMenuBar editor={editor} />
+      </Affix>
+      <EditorContent editor={editor} style={{ flex: 1 }} />
+    </CenteredArea>
   );
 };

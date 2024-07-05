@@ -1,10 +1,7 @@
 import { ShapeType } from "@ldo/ldo";
 import { potentialDocumentSchema } from "./potentialDocument.schema";
 import { potentialDocumentContext } from "./potentialDocument.context";
-import {
-  PotentialObject,
-  PotententialSubject,
-} from "./potentialDocument.typings";
+import { PotentialObject, PotentialSubject } from "./potentialDocument.typings";
 
 /**
  * =============================================================================
@@ -22,10 +19,10 @@ export const PotentialObjectShapeType: ShapeType<PotentialObject> = {
 };
 
 /**
- * PotententialSubject ShapeType
+ * PotentialSubject ShapeType
  */
-export const PotententialSubjectShapeType: ShapeType<PotententialSubject> = {
+export const PotentialSubjectShapeType: ShapeType<PotentialSubject> = {
   schema: potentialDocumentSchema,
-  shape: "https://shaperepo.com/schemas/activitystreams#PotententialSubject",
+  shape: "https://shaperepo.com/schemas/activitystreams#PotentialSubject",
   context: potentialDocumentContext,
 };

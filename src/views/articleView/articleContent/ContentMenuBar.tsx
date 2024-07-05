@@ -34,8 +34,6 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
           if (editor.isActive("heading", { level: 2 })) return "h2";
           if (editor.isActive("heading", { level: 3 })) return "h3";
           if (editor.isActive("heading", { level: 4 })) return "h4";
-          if (editor.isActive("heading", { level: 5 })) return "h5";
-          if (editor.isActive("heading", { level: 6 })) return "h6";
           return undefined;
         })()}
         onChange={(value) => {
@@ -50,10 +48,6 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
               return editor.chain().focus().setHeading({ level: 3 }).run();
             case "h4":
               return editor.chain().focus().setHeading({ level: 4 }).run();
-            case "h5":
-              return editor.chain().focus().setHeading({ level: 5 }).run();
-            case "h6":
-              return editor.chain().focus().setHeading({ level: 6 }).run();
           }
         }}
         options={[
@@ -62,10 +56,8 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
           { value: "h2", label: "Heading 2" },
           { value: "h3", label: "Heading 3" },
           { value: "h4", label: "Heading 4" },
-          { value: "h5", label: "Heading 5" },
-          { value: "h6", label: "Heading 6" },
         ]}
-        style={{ marginRight: 4, marginBottom: 4 }}
+        style={{ marginRight: 4, marginBottom: 4, width: 109 }}
       />
       <MenuButton
         icon={<BoldOutlined />}

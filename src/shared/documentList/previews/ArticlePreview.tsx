@@ -1,6 +1,6 @@
 import { Flex, Typography } from "antd";
 import { FunctionComponent } from "react";
-import { ViewProps } from "../../ViewProps";
+import { ViewProps } from "../../../views/ViewProps";
 import { useSubject } from "@ldo/solid-react";
 import { ArticleShapeType } from "../../../.ldo/activityPub.shapeTypes";
 import { Image } from "../../../.ldo/activityPub.typings";

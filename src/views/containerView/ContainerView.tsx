@@ -1,5 +1,6 @@
 import { Container } from "@ldo/solid";
 import { FunctionComponent } from "react";
+import { DocumentList } from "../../shared/documentList/DocumentList";
 
 interface ContainerViewProps {
   conatiner: Container;
@@ -8,5 +9,9 @@ interface ContainerViewProps {
 export const ContainerView: FunctionComponent<ContainerViewProps> = ({
   conatiner,
 }) => {
-  return <h1>Container</h1>;
+  return (
+    <DocumentList
+      documentUris={conatiner.children().map((child) => child.uri)}
+    />
+  );
 };

@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
-import { Layout as AntdLayout, Button, Flex } from "antd";
-import { LoginOutlined } from "@ant-design/icons";
-import { Router } from "../views/Router";
+import { Layout as AntdLayout } from "antd";
+import { ViewRouter } from "../views/ViewRouter";
+import { Header } from "./Header";
 
 export const Layout: FunctionComponent = () => {
   return (
@@ -12,24 +12,10 @@ export const Layout: FunctionComponent = () => {
         display: "flex",
         flexDirection: "column",
       }}>
-      <header>
-        <Flex justify="space-between" align="center" style={{ padding: 8 }}>
-          <Flex align="center">
-            <img
-              src="/assets/logo-orig.jpg"
-              style={{ height: 40 }}
-              alt="OtherJackson"
-            />
-            <h2 style={{ marginTop: 0, marginBottom: 0, marginLeft: 8 }}>
-              OtherJackson Blog
-            </h2>
-          </Flex>
-          <Button type="text" shape="circle" icon={<LoginOutlined />} />
-        </Flex>
-      </header>
+      <Header />
       <AntdLayout.Content
         style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Router />
+        <ViewRouter />
       </AntdLayout.Content>
     </AntdLayout>
   );

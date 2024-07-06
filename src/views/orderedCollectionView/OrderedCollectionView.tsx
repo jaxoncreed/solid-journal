@@ -1,11 +1,9 @@
 import { FunctionComponent } from "react";
-import { CenteredArea } from "../../layout/CenteredArea";
 import { ViewProps } from "../ViewProps";
 import { useSubject } from "@ldo/solid-react";
 import { OrderedCollectionShapeType } from "../../.ldo/activityPub.shapeTypes";
-import { OrderedCollectionCard } from "./OrderedCollectionCard";
-import { Card, Typography } from "antd";
 import { Link } from "../../.ldo/activityPub.typings";
+import { DocumentList } from "../../shared/documentList/DocumentList";
 
 export const OrderedCollectionView: FunctionComponent<ViewProps> = ({
   subject,
@@ -14,26 +12,13 @@ export const OrderedCollectionView: FunctionComponent<ViewProps> = ({
     OrderedCollectionShapeType,
     subject?.["@id"]
   );
+  const uris =
+    orderedCollection?.items
+      ?.filter(
+        (item): item is Link =>
+          item.type["@id"] === "Link" && !!(item as Link).href
+      )
+      .map((item) => item.href as string) || [];
 
-  return (
-    <CenteredArea>
-      {orderedCollection?.items?.map((item) => {
-        if (item.type["@id"] === "Link") {
-          return (
-            <OrderedCollectionCard
-              item={item as Link}
-              key={(item as Link).href}
-            />
-          );
-        }
-        return (
-          <Card>
-            <Typography.Text type="danger">
-              Error: displaying non-links in an ordered list is not supported
-            </Typography.Text>
-          </Card>
-        );
-      })}
-    </CenteredArea>
-  );
+  return <DocumentList documentUris={uris} />;
 };

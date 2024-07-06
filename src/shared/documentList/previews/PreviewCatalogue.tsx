@@ -1,5 +1,5 @@
 import { ComponentType } from "react";
-import { ViewProps } from "../../ViewProps";
+import { ViewProps } from "../../../views/ViewProps";
 import { ArticlePreview } from "./ArticlePreview";
 
 type PreviewCatalogue = Record<string, ComponentType<ViewProps>>;

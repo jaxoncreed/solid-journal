@@ -3,6 +3,14 @@ import "./App.css";
 import { BrowserSolidLdoProvider } from "@ldo/solid-react";
 import { ConfigProvider } from "antd";
 import { Layout } from "./layout/Layout";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <Layout />,
+  },
+]);
 
 function App() {
   return (
@@ -15,7 +23,7 @@ function App() {
             colorPrimary: "#000",
           },
         }}>
-        <Layout />
+        <RouterProvider router={router} />;
       </ConfigProvider>
     </BrowserSolidLdoProvider>
   );

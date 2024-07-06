@@ -1,32 +1,22 @@
-import { useSubject } from "@ldo/solid-react";
 import { FunctionComponent, useMemo } from "react";
-import { PotentialObjectShapeType } from "../.ldo/potentialDocument.shapeTypes";
-import {
-  PotentialSubject,
-  PotentialObject,
-} from "../.ldo/potentialDocument.typings";
+import { PotentialSubject } from "../.ldo/potentialDocument.typings";
 import { VIEW_CATALOGUE } from "./ViewCatalogue";
 import { UnknownView } from "./unknownView/UnknownView";
 
 interface SubjectRouterProps {
-  uri: string;
+  mainSubject: PotentialSubject;
 }
 
 export const SubjectRouter: FunctionComponent<SubjectRouterProps> = ({
-  uri,
+  mainSubject,
 }) => {
-  const resourceSubject = useSubject(PotentialObjectShapeType, uri);
   const mainComponent = useMemo(() => {
-    let potentialMainSubject: PotentialObject | PotentialSubject =
-      resourceSubject;
-    if (resourceSubject.primaryTopic) {
-      potentialMainSubject = resourceSubject.primaryTopic;
-    }
-    const Component = VIEW_CATALOGUE[potentialMainSubject?.type?.["@id"] || ""];
+    const Component = VIEW_CATALOGUE[mainSubject?.type?.["@id"] || ""];
     if (!Component) {
       return <UnknownView />;
     }
-    return <Component subject={potentialMainSubject} />;
-  }, [resourceSubject]);
+    return <Component subject={mainSubject} />;
+  }, [mainSubject]);
+
   return <>{mainComponent}</>;
 };

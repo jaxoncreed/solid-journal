@@ -10,7 +10,10 @@ export const ArticlePreview: FunctionComponent<ViewProps> = ({ subject }) => {
   if (!article) return <></>;
 
   // TODO: Handle bad cast
-  const articleImageUrl = (article.image?.[0] as Image).url?.[0] as string;
+  const potentialImage = article.image?.[0];
+  const articleImageUrl = potentialImage
+    ? ((potentialImage as Image).url?.[0] as string)
+    : undefined;
   const articleName = article.name?.[0];
   const articleSummary = article.summary?.[0];
 

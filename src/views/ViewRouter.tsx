@@ -15,7 +15,7 @@ export const ViewRouter: FunctionComponent = () => {
   }
 
   if (mainSubject?.type === "container") {
-    return <ContainerView conatiner={mainSubject} />;
+    return <ContainerView container={mainSubject} />;
   }
 
   return <SubjectRouter mainSubject={mainSubject} />;

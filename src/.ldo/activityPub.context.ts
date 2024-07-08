@@ -31,10 +31,7 @@ export const activityPubContext: ContextDefinition = {
   },
   name: {
     "@id": "https://www.w3.org/ns/activitystreams#name",
-    "@type": [
-      "http://www.w3.org/2001/XMLSchema#string",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
-    ],
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
     "@container": "@set",
   },
   hreflang: {
@@ -157,10 +154,7 @@ export const activityPubContext: ContextDefinition = {
   },
   summary: {
     "@id": "https://www.w3.org/ns/activitystreams#summary",
-    "@type": [
-      "http://www.w3.org/2001/XMLSchema#string",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
-    ],
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
     "@container": "@set",
   },
   tag: {
@@ -174,7 +168,7 @@ export const activityPubContext: ContextDefinition = {
   },
   url: {
     "@id": "https://www.w3.org/ns/activitystreams#url",
-    "@type": ["http://www.w3.org/2001/XMLSchema#anyURI", "@id"],
+    "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
     "@container": "@set",
   },
   to: {

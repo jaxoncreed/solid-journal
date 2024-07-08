@@ -4,6 +4,8 @@ import { BrowserSolidLdoProvider } from "@ldo/solid-react";
 import { ConfigProvider } from "antd";
 import { Layout } from "./layout/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,7 @@ function App() {
           },
         }}>
         <RouterProvider router={router} />;
+        <ToastContainer />
       </ConfigProvider>
     </BrowserSolidLdoProvider>
   );

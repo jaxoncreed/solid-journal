@@ -21,6 +21,7 @@ export function useResolveMainResource(
       const hrefUrl = new URL(uri);
       hrefUrl.protocol = process.env.REACT_APP_POD_PROTOCOL;
       hrefUrl.host = process.env.REACT_APP_POD_HOST;
+      hrefUrl.search = "";
       return hrefUrl.toString();
     }
     return uri;

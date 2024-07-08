@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export function displayError(error: Error): void {
-  // TODO
+  toast(error.message);
 }

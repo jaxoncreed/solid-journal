@@ -4,7 +4,13 @@ import {
   AlignRightOutlined,
   BoldOutlined,
   CodeOutlined,
+  DeleteColumnOutlined,
+  DeleteRowOutlined,
   FileImageOutlined,
+  InsertRowAboveOutlined,
+  InsertRowBelowOutlined,
+  InsertRowLeftOutlined,
+  InsertRowRightOutlined,
   ItalicOutlined,
   MenuUnfoldOutlined,
   OrderedListOutlined,
@@ -13,7 +19,7 @@ import {
   UnderlineOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
-import { Flex, Select } from "antd";
+import { Button, Flex, Select } from "antd";
 import { FunctionComponent } from "react";
 import { MenuButton } from "../common/MenuButton";
 import { Editor } from "@tiptap/react";
@@ -26,7 +32,12 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
   editor,
 }) => {
   return (
-    <Flex wrap style={{ paddingTop: 8, paddingBottom: 8 }}>
+    <Flex
+      wrap
+      style={{
+        paddingTop: 8,
+        paddingBottom: 4,
+      }}>
       <Select
         value={(() => {
           if (editor.isActive("paragraph")) return "p";
@@ -64,69 +75,134 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         isActive={editor.isActive("bold")}
+        tooltip="Bold"
       />
       <MenuButton
         icon={<ItalicOutlined />}
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         isActive={editor.isActive("italic")}
+        tooltip="Italic"
       />
       <MenuButton
         icon={<UnderlineOutlined />}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         disabled={!editor.can().chain().focus().toggleUnderline().run()}
         isActive={editor.isActive("underline")}
+        tooltip="Underline"
       />
       <MenuButton
         icon={<StrikethroughOutlined />}
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         isActive={editor.isActive("strike")}
+        tooltip="Strikethrough"
       />
       <MenuButton
         icon={<AlignLeftOutlined />}
         onClick={() => editor.chain().focus().setTextAlign("left").run()}
         disabled={!editor.can().chain().focus().setTextAlign("left").run()}
         isActive={editor.isActive({ textAlign: "left" })}
+        tooltip="Align Left"
       />
       <MenuButton
         icon={<AlignCenterOutlined />}
         onClick={() => editor.chain().focus().setTextAlign("center").run()}
         disabled={!editor.can().chain().focus().setTextAlign("center").run()}
         isActive={editor.isActive({ textAlign: "center" })}
+        tooltip="Align Center"
       />
       <MenuButton
         icon={<AlignRightOutlined />}
         onClick={() => editor.chain().focus().setTextAlign("right").run()}
         disabled={!editor.can().chain().focus().setTextAlign("right").run()}
         isActive={editor.isActive({ textAlign: "right" })}
+        tooltip="Align Right"
       />
       <MenuButton
         icon={<UnorderedListOutlined />}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         disabled={!editor.can().chain().focus().toggleBulletList().run()}
         isActive={editor.isActive("bulletList")}
+        tooltip="Bullet List"
       />
       <MenuButton
         icon={<OrderedListOutlined />}
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         disabled={!editor.can().chain().focus().toggleOrderedList().run()}
         isActive={editor.isActive("orderedList")}
+        tooltip="Numbered List"
       />
       <MenuButton
         icon={<CodeOutlined />}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         disabled={!editor.can().chain().focus().toggleCodeBlock().run()}
         isActive={editor.isActive("codeBlock")}
+        tooltip="Code Block"
       />
       <MenuButton
         icon={<MenuUnfoldOutlined />}
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         disabled={!editor.can().chain().focus().toggleBlockquote().run()}
         isActive={editor.isActive("blockQuote")}
+        tooltip="Quote Block"
       />
-      <MenuButton icon={<FileImageOutlined />} />
-      <MenuButton icon={<TableOutlined />} />
+      <MenuButton icon={<FileImageOutlined />} tooltip="Insert Image" />
+      <Button.Group>
+        <MenuButton
+          icon={<TableOutlined />}
+          onClick={() =>
+            editor
+              .chain()
+              .focus()
+              .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+              .run()
+          }
+          isActive={editor.isActive("table")}
+          disabled={!editor.can().chain().focus().insertTable().run()}
+          tooltip="Insert Table"
+        />
+        {editor.isActive("table") && (
+          <>
+            <MenuButton
+              icon={<InsertRowLeftOutlined />}
+              tooltip="Insert Column Left"
+              onClick={() => editor.chain().focus().addColumnBefore().run()}
+              disabled={!editor.can().chain().focus().addColumnBefore().run()}
+            />
+            <MenuButton
+              icon={<InsertRowRightOutlined />}
+              tooltip="Insert Column Right"
+              onClick={() => editor.chain().focus().addColumnAfter().run()}
+              disabled={!editor.can().chain().focus().addColumnAfter().run()}
+            />
+            <MenuButton
+              icon={<InsertRowAboveOutlined />}
+              tooltip="Insert Row Above"
+              onClick={() => editor.chain().focus().addRowBefore().run()}
+              disabled={!editor.can().chain().focus().addRowBefore().run()}
+            />
+            <MenuButton
+              icon={<InsertRowBelowOutlined />}
+              tooltip="Insert Row Below"
+              onClick={() => editor.chain().focus().addRowAfter().run()}
+              disabled={!editor.can().chain().focus().addRowAfter().run()}
+            />
+            <MenuButton
+              icon={<DeleteColumnOutlined />}
+              tooltip="Delete Column"
+              onClick={() => editor.chain().focus().deleteColumn().run()}
+              disabled={!editor.can().chain().focus().deleteColumn().run()}
+            />
+            <MenuButton
+              icon={<DeleteRowOutlined />}
+              tooltip="Delete Row"
+              onClick={() => editor.chain().focus().deleteRow().run()}
+              disabled={!editor.can().chain().focus().deleteRow().run()}
+            />
+          </>
+        )}
+      </Button.Group>
     </Flex>
   );
 };

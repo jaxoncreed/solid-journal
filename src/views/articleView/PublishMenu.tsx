@@ -25,20 +25,22 @@ export const PublishMenu: FunctionComponent<PublishMenuProps> = ({
 
   return (
     <Flex justify="flex-end" style={{ padding: 8 }} align="center">
-      <MenuButton
-        shape={isMobile ? "circle" : "round"}
-        icon={<LockOutlined />}
-        children={isMobile ? undefined : "Make Private"}
-      />
-      <MenuButton
-        type="primary"
-        loading={loadingSave}
-        shape={isMobile ? "circle" : "round"}
-        icon={<SaveOutlined />}
-        onClick={onSaveClicked}
-        children={isMobile ? undefined : "Save"}
-        disabled={!isSavable}
-      />
+      <div style={{ pointerEvents: "auto" }}>
+        <MenuButton
+          shape={isMobile ? "circle" : "round"}
+          icon={<LockOutlined />}
+          children={isMobile ? undefined : "Make Private"}
+        />
+        <MenuButton
+          type="primary"
+          loading={loadingSave}
+          shape={isMobile ? "circle" : "round"}
+          icon={<SaveOutlined />}
+          onClick={onSaveClicked}
+          children={isMobile ? undefined : "Save"}
+          disabled={!isSavable}
+        />
+      </div>
     </Flex>
   );
 };

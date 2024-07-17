@@ -1,5 +1,4 @@
 import {
-  CloseOutlined,
   DeleteOutlined,
   FileImageOutlined,
   UploadOutlined,

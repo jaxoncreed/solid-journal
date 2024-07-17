@@ -1,15 +1,17 @@
-import { Button, ButtonProps } from "antd";
+import { Button, ButtonProps, Tooltip } from "antd";
 import { FunctionComponent } from "react";
 
-interface MenuButton extends ButtonProps {
+interface MenuButtonProps extends ButtonProps {
   isActive?: boolean;
+  tooltip?: string;
 }
 
-export const MenuButton: FunctionComponent<MenuButton> = ({
+export const MenuButton: FunctionComponent<MenuButtonProps> = ({
   isActive,
+  tooltip,
   ...props
 }) => {
-  return (
+  const button = (
     <Button
       shape="circle"
       type={isActive ? "primary" : "default"}
@@ -17,4 +19,5 @@ export const MenuButton: FunctionComponent<MenuButton> = ({
       {...props}
     />
   );
+  return tooltip ? <Tooltip title={tooltip}>{button}</Tooltip> : button;
 };

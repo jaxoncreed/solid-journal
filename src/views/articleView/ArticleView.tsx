@@ -96,23 +96,25 @@ export const ArticleView: FunctionComponent<ViewProps> = ({
   return (
     <>
       {hasWriteAccess && (
-        <Affix offsetTop={0}>
+        <Affix offsetTop={0} style={{ zIndex: 1, pointerEvents: "none" }}>
           <PublishMenu
             isSavable={didMetadataUpdate || didContentUpdate}
             onSave={onSave}
           />
         </Affix>
       )}
-      <ArticleMetadata
-        titleValue={article.current?.name?.[0]}
-        summaryValue={article.current?.summary?.[0]}
-        imageUri={imageUri}
-        onTitleChange={onTitleChange}
-        onSummaryChange={onSummaryChange}
-        onNewImage={onNewImage}
-        isEditing={!!hasWriteAccess}
-      />
-      <ArticleContent isEditing={hasWriteAccess} />
+      <div style={{ zIndex: 0 }}>
+        <ArticleMetadata
+          titleValue={article.current?.name?.[0]}
+          summaryValue={article.current?.summary?.[0]}
+          imageUri={imageUri}
+          onTitleChange={onTitleChange}
+          onSummaryChange={onSummaryChange}
+          onNewImage={onNewImage}
+          isEditing={!!hasWriteAccess}
+        />
+        <ArticleContent isEditing={hasWriteAccess} />
+      </div>
     </>
   );
 };

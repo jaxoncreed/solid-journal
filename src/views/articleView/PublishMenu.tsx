@@ -14,7 +14,7 @@ export const PublishMenu: FunctionComponent<PublishMenuProps> = ({
   onSave,
 }) => {
   const { width } = useWindowSize();
-  const isMobile = width ? width < 982 : true;
+  const isMobile = width ? width < 1054 : true;
   const [loadingSave, setLoadingSave] = useState(false);
 
   const onSaveClicked = useCallback(async () => {

@@ -15,6 +15,7 @@ import TableRow from "@tiptap/extension-table-row";
 import { common, createLowlight } from "lowlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Link from "@tiptap/extension-link";
 
 const lowlight = createLowlight(common);
 
@@ -35,6 +36,11 @@ const extensions = [
   TableCell,
   Placeholder.configure({
     placeholder: "Write your article…",
+  }),
+  Link.configure({
+    openOnClick: false,
+    autolink: true,
+    defaultProtocol: "https",
   }),
 ];
 

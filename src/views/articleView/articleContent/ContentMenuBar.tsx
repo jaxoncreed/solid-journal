@@ -23,6 +23,7 @@ import { Button, Flex, Select } from "antd";
 import { FunctionComponent } from "react";
 import { MenuButton } from "../common/MenuButton";
 import { Editor } from "@tiptap/react";
+import { LinkButton } from "./LinkButton";
 
 interface ContentMenuBarProps {
   editor: Editor;
@@ -133,6 +134,7 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
         isActive={editor.isActive("orderedList")}
         tooltip="Numbered List"
       />
+      <LinkButton editor={editor} />
       <MenuButton
         icon={<CodeOutlined />}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}

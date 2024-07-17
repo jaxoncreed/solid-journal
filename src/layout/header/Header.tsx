@@ -1,21 +1,41 @@
-import { EditOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  LogoutOutlined,
+  PictureOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { useSolidAuth } from "@ldo/solid-react";
 import { Avatar, Dropdown, Flex, MenuProps } from "antd";
-import { FunctionComponent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { FunctionComponent, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { LoginButton } from "./LoginButton";
+import { useAppConfig } from "../../shared/providers/AppConfigProvider";
+import { useHybridNavigate } from "../../shared/hooks/useHybridNavigate";
 
 export const Header: FunctionComponent = () => {
   const { logout, session } = useSolidAuth();
-  const navigate = useNavigate();
+  const navigate = useHybridNavigate();
+  const appConfig = useAppConfig();
 
-  const menuItems: MenuProps["items"] = [
-    {
-      label: "Blog",
-      icon: <EditOutlined />,
-      key: "blog",
-      onClick: () => navigate("/blog/"),
-    },
+  const menuItems: MenuProps["items"] = useMemo(() => {
+    const menuItems: MenuProps["items"] = [];
+    if (appConfig.blogUri) {
+      menuItems.push({
+        label: "My Blog",
+        icon: <EditOutlined />,
+        key: "blog",
+        onClick: () => navigate(appConfig.blogUri as string),
+      });
+    }
+    if (appConfig.mediaUri) {
+      menuItems.push({
+        label: "My Media",
+        icon: <PictureOutlined />,
+        key: "media",
+        onClick: () => navigate(appConfig.mediaUri as string),
+      });
+    }
+
     // {
     //   label: "My Subscriptions",
     //   icon: <PlusSquareOutlined />,
@@ -23,13 +43,15 @@ export const Header: FunctionComponent = () => {
     //   // TODO: Get location of the subscriptions from the profile
     //   onClick: () => navigate("/"),
     // },
-    {
+
+    menuItems.push({
       label: "Log Out",
       icon: <LogoutOutlined />,
       onClick: logout,
       key: "logout",
-    },
-  ];
+    });
+    return menuItems;
+  }, [appConfig, logout, navigate]);
 
   return (
     <header>

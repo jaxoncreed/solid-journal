@@ -63,10 +63,7 @@ export const activityPubContext: ContextDefinition = {
   },
   content: {
     "@id": "https://www.w3.org/ns/activitystreams#content",
-    "@type": [
-      "http://www.w3.org/2001/XMLSchema#string",
-      "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
-    ],
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
     "@container": "@set",
   },
   context: {
@@ -275,11 +272,7 @@ export const activityPubContext: ContextDefinition = {
   },
   closed: {
     "@id": "https://www.w3.org/ns/activitystreams#closed",
-    "@type": [
-      "@id",
-      "http://www.w3.org/2001/XMLSchema#dateTime",
-      "http://www.w3.org/2001/XMLSchema#boolean",
-    ],
+    "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
     "@container": "@set",
   },
   inbox: {

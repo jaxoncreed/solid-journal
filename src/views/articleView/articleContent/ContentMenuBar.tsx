@@ -6,7 +6,6 @@ import {
   CodeOutlined,
   DeleteColumnOutlined,
   DeleteRowOutlined,
-  FileImageOutlined,
   InsertRowAboveOutlined,
   InsertRowBelowOutlined,
   InsertRowLeftOutlined,
@@ -14,6 +13,7 @@ import {
   ItalicOutlined,
   MenuUnfoldOutlined,
   OrderedListOutlined,
+  PictureOutlined,
   StrikethroughOutlined,
   TableOutlined,
   UnderlineOutlined,
@@ -144,10 +144,10 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
         icon={<MenuUnfoldOutlined />}
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         disabled={!editor.can().chain().focus().toggleBlockquote().run()}
-        isActive={editor.isActive("blockQuote")}
+        isActive={editor.isActive("blockquote")}
         tooltip="Quote Block"
       />
-      <MenuButton icon={<FileImageOutlined />} tooltip="Insert Image" />
+      <MenuButton icon={<PictureOutlined />} tooltip="Insert Image" />
       <Button.Group>
         <MenuButton
           icon={<TableOutlined />}

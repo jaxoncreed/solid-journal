@@ -2,16 +2,12 @@ import { LoginOutlined } from "@ant-design/icons";
 import { useSolidAuth } from "@ldo/solid-react";
 import { Button, Input, Modal } from "antd";
 import { FunctionComponent, useCallback, useState } from "react";
-
-const baseUri =
-  process.env.REACT_APP_POD_PROTOCOL && process.env.REACT_APP_POD_HOST
-    ? `${process.env.REACT_APP_POD_PROTOCOL}://${process.env.REACT_APP_POD_HOST}`
-    : window.location.origin;
+import { BASE_URI } from "../../shared/baseUri";
 
 export const LoginButton: FunctionComponent = () => {
   const { login } = useSolidAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [issuer, setIssuer] = useState(baseUri);
+  const [issuer, setIssuer] = useState(BASE_URI);
   const onLogin = useCallback(async () => {
     await login(issuer);
   }, [issuer, login]);
@@ -29,7 +25,7 @@ export const LoginButton: FunctionComponent = () => {
         onOk={onLogin}
         onCancel={() => setIsModalOpen(false)}>
         <Input
-          placeholder={baseUri}
+          placeholder={BASE_URI}
           value={issuer}
           onChange={(e) => setIssuer(e.target.value)}
         />

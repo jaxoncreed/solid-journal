@@ -1,5 +1,5 @@
 import { Affix } from "antd";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { ContentMenuBar } from "./ContentMenuBar";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -12,6 +12,11 @@ import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
+import { common, createLowlight } from "lowlight";
+import Placeholder from "@tiptap/extension-placeholder";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+
+const lowlight = createLowlight(common);
 
 const extensions = [
   StarterKit,
@@ -19,12 +24,18 @@ const extensions = [
   TextAlign.configure({
     types: ["heading", "paragraph"],
   }),
+  CodeBlockLowlight.configure({
+    lowlight,
+  }),
   Table.configure({
     resizable: true,
   }),
   TableRow,
   TableHeader,
   TableCell,
+  Placeholder.configure({
+    placeholder: "Write your article…",
+  }),
 ];
 
 const content = `
@@ -51,24 +62,32 @@ export const ArticleContent: FunctionComponent<ArticleContentProps> = ({
     content,
   });
 
+  useEffect(() => {
+    if (editor) {
+      editor.setOptions({ editable: isEditing });
+    }
+  }, [isEditing, editor]);
+
   if (!editor) return <></>;
 
   return (
     <CenteredArea>
-      {isEditing && (
-        <Affix offsetTop={0}>
-          <div
-            style={{
-              backgroundColor: "#FFF",
-              borderBottom: "1px solid rgba(61, 37, 20, 0.12)",
-            }}>
-            <div style={{ marginRight: width && width < 670 ? 88 : 0 }}>
-              <ContentMenuBar editor={editor} />
+      <div style={{ minHeight: isEditing ? "100vh" : undefined }}>
+        {isEditing && (
+          <Affix offsetTop={0}>
+            <div
+              style={{
+                backgroundColor: "#FFF",
+                borderBottom: "1px solid rgba(61, 37, 20, 0.12)",
+              }}>
+              <div style={{ marginRight: width && width < 670 ? 88 : 0 }}>
+                <ContentMenuBar editor={editor} />
+              </div>
             </div>
-          </div>
-        </Affix>
-      )}
-      <EditorContent editor={editor} style={{ flex: 1 }} />
+          </Affix>
+        )}
+        <EditorContent editor={editor} style={{ flex: 1 }} />
+      </div>
     </CenteredArea>
   );
 };

@@ -1,0 +1,10 @@
+PREFIX sra: <https://shaperepo.com/schemas/activitystreams#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sj: <https://shaperepo.com/vocab/solid_journal#>
+
+sra:SolidJournalConfig EXTRA a {
+  a sj:SolidJournalConfig ;
+  sj:blog IRI ;
+  sj:media IRI ;
+}
+

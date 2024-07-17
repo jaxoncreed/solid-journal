@@ -6,6 +6,7 @@ import { Layout } from "./layout/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AppConfigProvider } from "./shared/providers/AppConfigProvider";
 
 const router = createBrowserRouter([
   {
@@ -25,8 +26,10 @@ function App() {
             colorPrimary: "#000",
           },
         }}>
-        <RouterProvider router={router} />;
-        <ToastContainer />
+        <AppConfigProvider>
+          <RouterProvider router={router} />;
+          <ToastContainer />
+        </AppConfigProvider>
       </ConfigProvider>
     </BrowserSolidLdoProvider>
   );

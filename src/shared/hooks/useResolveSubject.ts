@@ -8,6 +8,7 @@ import {
   PotentialObject,
   PotentialSubject,
 } from "../../.ldo/potentialDocument.typings";
+import { useHasWriteAccess } from "./useHasWriteAccess";
 
 export function useResolveMainResource(
   uri: string
@@ -70,9 +71,11 @@ export function useResolveMainResource(
   return [mainResource, currentLoaction, isSubIndex];
 }
 
-export function useResolveSubject(
-  uri: string
-): Container | PotentialSubject | undefined {
+export function useResolveSubject(uri: string): {
+  resource?: Container | Leaf;
+  subject?: PotentialSubject;
+  hasWriteAccess?: boolean;
+} {
   const [mainResource, currentLocation, isSubIndex] =
     useResolveMainResource(uri);
   const potentialSubjectUri = !mainResource
@@ -85,8 +88,8 @@ export function useResolveSubject(
     potentialSubjectUri
   );
 
-  return useMemo(() => {
-    if (mainResource?.type === "container") return mainResource;
+  const subject = useMemo(() => {
+    if (mainResource?.type === "container") return undefined;
     if (!resourceSubject) return undefined;
     let potentialMainSubject: PotentialObject | PotentialSubject =
       resourceSubject;
@@ -95,4 +98,8 @@ export function useResolveSubject(
     }
     return potentialMainSubject;
   }, [resourceSubject, mainResource]);
+
+  const hasWriteAccess = useHasWriteAccess(mainResource);
+
+  return { subject, hasWriteAccess, resource: mainResource };
 }

@@ -3,18 +3,17 @@ import { FunctionComponent } from "react";
 import { DocumentList } from "../../shared/documentList/DocumentList";
 import { CenteredArea } from "../../layout/CenteredArea";
 import { Affix, Flex } from "antd";
-import { useHasWriteAccess } from "../../shared/hooks/useHasWriteAccess";
 import { CreateButton } from "./CreateButton";
 
 interface ContainerViewProps {
   container: Container;
+  hasWriteAccess?: boolean;
 }
 
 export const ContainerView: FunctionComponent<ContainerViewProps> = ({
   container,
+  hasWriteAccess,
 }) => {
-  const hasWriteAccess = useHasWriteAccess(container);
-
   return (
     <>
       {hasWriteAccess && (

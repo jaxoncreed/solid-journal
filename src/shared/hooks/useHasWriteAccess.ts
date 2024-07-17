@@ -4,21 +4,30 @@ import { useRef, useState } from "react";
 import useAsyncEffect from "use-async-effect";
 import { displayError } from "../../actions/displayError";
 
-export function useHasWriteAccess(resource: Resource) {
-  const completedCheckRef = useRef(false);
+export function useHasWriteAccess(resource?: Resource): boolean | undefined {
+  const lastIsLoggedInState = useRef(false);
   const { session } = useSolidAuth();
   const [hasWritAccess, setHasWriteAccess] = useState<boolean | undefined>();
 
   useAsyncEffect(async () => {
-    if (!completedCheckRef.current && session.webId) {
-      const result = await resource.getWac();
-      completedCheckRef.current = true;
+    if (lastIsLoggedInState.current !== session.isLoggedIn && resource) {
+      const result = await resource.getWac({ ignoreCache: true });
+      lastIsLoggedInState.current = session.isLoggedIn;
       if (result.isError) {
+        if (
+          result.type === "unauthenticatedError" ||
+          result.type === "unauthorizedError"
+        ) {
+          setHasWriteAccess(false);
+          return;
+        }
         displayError(result);
         return;
       }
       if (result.type === "getWacRuleSuccess") {
-        const rule = result.wacRule.agent[session.webId];
+        const rule = session.webId
+          ? result.wacRule.agent[session.webId]
+          : result.wacRule.public;
         setHasWriteAccess(rule && rule.write && rule.control);
       }
     }

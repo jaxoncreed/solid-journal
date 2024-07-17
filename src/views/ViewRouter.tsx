@@ -8,15 +8,25 @@ export const ViewRouter: FunctionComponent = () => {
   // Needed to trigger reload
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const location = useLocation();
-  const mainSubject = useResolveSubject(window.location.href);
+  const { subject, resource, hasWriteAccess } = useResolveSubject(
+    window.location.href
+  );
 
-  if (!mainSubject) {
+  if (!subject) {
     return <></>;
   }
 
-  if (mainSubject?.type === "container") {
-    return <ContainerView container={mainSubject} />;
+  if (resource?.type === "container") {
+    return (
+      <ContainerView container={resource} hasWriteAccess={hasWriteAccess} />
+    );
   }
 
-  return <SubjectRouter mainSubject={mainSubject} />;
+  return (
+    <SubjectRouter
+      mainSubject={subject}
+      hasWriteAccess={hasWriteAccess}
+      resource={resource}
+    />
+  );
 };

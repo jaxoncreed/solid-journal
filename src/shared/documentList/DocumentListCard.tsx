@@ -11,7 +11,7 @@ interface DocumentListCardProps {
 export const DocumentListCard: FunctionComponent<DocumentListCardProps> = ({
   uri,
 }) => {
-  const itemSubject = useResolveSubject(uri);
+  const { resource, subject } = useResolveSubject(uri);
   const navigate = useNavigate();
   const pathAndHash = useMemo(() => {
     const url = new URL(uri);
@@ -24,16 +24,14 @@ export const DocumentListCard: FunctionComponent<DocumentListCardProps> = ({
       hoverable
       onClick={() => navigate(pathAndHash)}>
       {(() => {
-        if (!itemSubject) {
+        if (!resource) {
           return <Skeleton active paragraph={{ rows: 3 }} title={false} />;
         }
-        if (itemSubject.type === "container") {
-          return (
-            <Typography.Text>Container: {itemSubject.uri}</Typography.Text>
-          );
+        if (resource.type === "container") {
+          return <Typography.Text>Container: {resource.uri}</Typography.Text>;
         }
 
-        const Component = PREVIEW_CATALOGUE[itemSubject?.type?.["@id"] || ""];
+        const Component = PREVIEW_CATALOGUE[subject?.type?.["@id"] || ""];
         if (!Component) {
           return (
             <Typography.Text type="danger">
@@ -41,7 +39,7 @@ export const DocumentListCard: FunctionComponent<DocumentListCardProps> = ({
             </Typography.Text>
           );
         }
-        return <Component subject={itemSubject} />;
+        return <Component subject={subject} />;
       })()}
     </Card>
   );

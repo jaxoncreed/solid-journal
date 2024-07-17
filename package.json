@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
-    "@ldo/ldo": "^0.0.1-alpha.24",
-    "@ldo/solid": "^0.0.1-alpha.24",
-    "@ldo/solid-react": "^0.0.1-alpha.24",
+    "@ldo/ldo": "^0.0.1-alpha.26",
+    "@ldo/solid": "^0.0.1-alpha.26",
+    "@ldo/solid-react": "^0.0.1-alpha.26",
     "@solid/community-server": "^7.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -53,7 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@ldo/cli": "^0.0.1-alpha.24",
+    "@ldo/cli": "^0.0.1-alpha.26",
     "@types/jsonld": "^1.5.14",
     "@types/shexj": "^2.1.7",
     "concurrently": "^8.2.2",

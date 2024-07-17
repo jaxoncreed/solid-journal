@@ -66,9 +66,13 @@ const content = `<p>Hello World</p>
 <p>Hello World</p>
 `;
 
-interface ArticleContentProps {}
+interface ArticleContentProps {
+  isEditing?: boolean;
+}
 
-export const ArticleContent: FunctionComponent<ArticleContentProps> = () => {
+export const ArticleContent: FunctionComponent<ArticleContentProps> = ({
+  isEditing,
+}) => {
   const { width } = useWindowSize();
   const editor = useEditor({
     extensions,
@@ -79,11 +83,13 @@ export const ArticleContent: FunctionComponent<ArticleContentProps> = () => {
 
   return (
     <CenteredArea>
-      <Affix
-        offsetTop={0}
-        style={{ marginRight: width && width < 670 ? 88 : 0 }}>
-        <ContentMenuBar editor={editor} />
-      </Affix>
+      {isEditing && (
+        <Affix
+          offsetTop={0}
+          style={{ marginRight: width && width < 670 ? 88 : 0 }}>
+          <ContentMenuBar editor={editor} />
+        </Affix>
+      )}
       <EditorContent editor={editor} style={{ flex: 1 }} />
     </CenteredArea>
   );

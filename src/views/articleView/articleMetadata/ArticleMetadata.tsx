@@ -1,30 +1,46 @@
 import { FunctionComponent } from "react";
-import { Typography, Upload } from "antd";
 import { CenteredArea } from "../../../layout/CenteredArea";
-import { InboxOutlined } from "@ant-design/icons";
+import { EditableParagraph, EditableTitle } from "../../../shared/EditableText";
+import { SplashImage } from "./SplashImage";
 
-export const ArticleMetadata: FunctionComponent = () => {
+interface ArticleMetadataProps {
+  titleValue?: string;
+  onTitleChange: (value: string) => void;
+  summaryValue?: string;
+  onSummaryChange: (value: string) => void;
+  imageUri?: string;
+  onNewImage: (uploaded: unknown) => void;
+  isEditing: boolean;
+}
+
+export const ArticleMetadata: FunctionComponent<ArticleMetadataProps> = ({
+  titleValue,
+  onTitleChange,
+  summaryValue,
+  onSummaryChange,
+  imageUri,
+  onNewImage,
+  isEditing,
+}) => {
   return (
     <CenteredArea>
-      <Typography.Title editable level={1}>
-        Work Title
-      </Typography.Title>
-      <Upload.Dragger>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibited from
-          uploading company data or other banned files.
-        </p>
-      </Upload.Dragger>
-      <Typography.Paragraph editable style={{ fontSize: 20 }}>
-        This is an example of a description. I love that. Descriptions are the
-        best.
-      </Typography.Paragraph>
+      <EditableTitle
+        placeholder="Article Title"
+        isEditing={isEditing}
+        value={titleValue}
+        onChange={(e) => onTitleChange(e.target.value)}
+      />
+      <SplashImage
+        imageUri={imageUri}
+        onNewImage={onNewImage}
+        isEditing={isEditing}
+      />
+      <EditableParagraph
+        placeholder="Article Summary"
+        isEditing={isEditing}
+        value={summaryValue}
+        onChange={(e) => onSummaryChange(e.target.value)}
+      />
     </CenteredArea>
   );
 };

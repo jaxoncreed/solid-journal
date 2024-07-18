@@ -13,7 +13,6 @@ import {
   ItalicOutlined,
   MenuUnfoldOutlined,
   OrderedListOutlined,
-  PictureOutlined,
   StrikethroughOutlined,
   TableOutlined,
   UnderlineOutlined,
@@ -21,9 +20,10 @@ import {
 } from "@ant-design/icons";
 import { Button, Flex, Select } from "antd";
 import { FunctionComponent } from "react";
-import { MenuButton } from "../common/MenuButton";
+import { MenuButton } from "../../common/MenuButton";
 import { Editor } from "@tiptap/react";
 import { LinkButton } from "./LinkButton";
+import { ImageButton } from "./ImageButton";
 
 interface ContentMenuBarProps {
   editor: Editor;
@@ -149,7 +149,7 @@ export const ContentMenuBar: FunctionComponent<ContentMenuBarProps> = ({
         isActive={editor.isActive("blockquote")}
         tooltip="Quote Block"
       />
-      <MenuButton icon={<PictureOutlined />} tooltip="Insert Image" />
+      <ImageButton editor={editor} />
       <Button.Group>
         <MenuButton
           icon={<TableOutlined />}

@@ -1,5 +1,5 @@
 import { FunctionComponent, useCallback, useState } from "react";
-import { MenuButton } from "../common/MenuButton";
+import { MenuButton } from "../../common/MenuButton";
 import { Editor } from "@tiptap/react";
 import { LinkOutlined } from "@ant-design/icons";
 import { Input, Modal } from "antd";
@@ -44,7 +44,7 @@ export const LinkButton: FunctionComponent<LinkButtonProps> = ({ editor }) => {
         tooltip="Insert Hyperlink"
       />
       <Modal
-        title="Select your Solid Identity Provider"
+        title="Link URL"
         open={isLinkModalOpen}
         onOk={onCreateLink}
         onCancel={() => setIsLinkModalOpen(false)}>

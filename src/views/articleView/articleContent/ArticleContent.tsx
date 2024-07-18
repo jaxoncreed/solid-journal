@@ -1,6 +1,6 @@
 import { Affix } from "antd";
 import { FunctionComponent, useEffect } from "react";
-import { ContentMenuBar } from "./ContentMenuBar";
+import { ContentMenuBar } from "./contentMenu/ContentMenuBar";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -16,6 +16,7 @@ import { common, createLowlight } from "lowlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
 
 const lowlight = createLowlight(common);
 
@@ -42,6 +43,7 @@ const extensions = [
     autolink: true,
     defaultProtocol: "https",
   }),
+  Image,
 ];
 
 const content = `

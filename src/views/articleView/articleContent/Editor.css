@@ -18,6 +18,17 @@
   font-size: 22px;
 }
 
+.tiptap img {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.tiptap img.ProseMirror-selectednode {
+  border: 3px solid #000;
+}
+
 .tiptap p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);

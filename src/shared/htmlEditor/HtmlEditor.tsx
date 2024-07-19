@@ -4,6 +4,7 @@ import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import useAsyncEffect from "use-async-effect";
 import { TipTapEditor } from "./TipTapEditor";
 import { Skeleton } from "antd";
+import { displayError } from "../../actions/displayError";
 
 export interface HtmlEditorMethods {
   save: () => Promise<void>;
@@ -46,12 +47,16 @@ export const HtmlEditor = forwardRef<HtmlEditorMethods, HtmlEditorProps>(
      */
     useImperativeHandle(ref, () => ({
       async save(): Promise<void> {
-        await contentResource.uploadAndOverwrite(
+        const result = await contentResource.uploadAndOverwrite(
           new Blob([html || ""], {
             type: "text/html",
           }),
           "text/html"
         );
+        if (result.isError) {
+          displayError(result);
+          return;
+        }
       },
     }));
 

@@ -8,6 +8,10 @@ import { Affix } from "antd";
 import { PublishMenu } from "./PublishMenu";
 import { Article } from "../../.ldo/activityPub.typings";
 import { LeafUri } from "@ldo/solid";
+import {
+  ArticleMetadata,
+  ArticleMetadataMethods,
+} from "./articleMetadata/ArticleMetadata";
 
 export const ArticleView: FunctionComponent<ViewProps<Article>> = ({
   subject,
@@ -25,13 +29,18 @@ export const ArticleView: FunctionComponent<ViewProps<Article>> = ({
   const htmlEditorRef = useRef<HtmlEditorMethods>(null);
 
   /**
+   * Metadata
+   */
+  const metadataRef = useRef<ArticleMetadataMethods>(null);
+
+  /**
    * Save
    */
   const onSave = useCallback(async () => {
     await Promise.all([
       (async () => {
-        if (didMetadataUpdate) {
-          // TODO
+        if (didMetadataUpdate && metadataRef.current?.save) {
+          await metadataRef.current.save();
           setDidMetadataUpdate(false);
         }
       })(),
@@ -59,15 +68,13 @@ export const ArticleView: FunctionComponent<ViewProps<Article>> = ({
         </Affix>
       )}
       <div style={{ zIndex: 0 }}>
-        {/* <ArticleMetadata
-          titleValue={article.current?.name?.[0]}
-          summaryValue={article.current?.summary?.[0]}
-          imageUri={imageUri}
-          onTitleChange={onTitleChange}
-          onSummaryChange={onSummaryChange}
-          onNewImage={onNewImage}
+        <ArticleMetadata
+          resource={resource}
+          subject={subject}
+          onStatusUpdate={setDidMetadataUpdate}
           isEditing={!!hasWriteAccess}
-        /> */}
+          ref={metadataRef}
+        />
         {contentUri && (
           <HtmlEditor
             isEditing={hasWriteAccess}

@@ -14,6 +14,7 @@ import { Leaf, SolidLdoTransactionDataset } from "@ldo/solid";
 import { useLdo } from "@ldo/solid-react";
 import { ArticleShapeType } from "../../../.ldo/activityPub.shapeTypes";
 import { displayError } from "../../../actions/displayError";
+import { uid } from "uid";
 
 export interface ArticleMetadataMethods {
   save: () => Promise<void>;
@@ -73,8 +74,23 @@ export const ArticleMetadata = forwardRef<
     [forceUpdate, onStatusUpdate]
   );
 
-  const onNewImage = useCallback(() => {
-    // TODO
+  const onNewImage = useCallback(
+    (uri: string) => {
+      article.current.image = [
+        {
+          "@id": `${resource?.uri}#${uid()}`,
+          type: [{ "@id": "Image" }],
+          url: [uri],
+        },
+      ];
+      onStatusUpdate?.(true);
+      forceUpdate();
+    },
+    [forceUpdate, onStatusUpdate, resource?.uri]
+  );
+
+  const onImageRemove = useCallback(() => {
+    delete article.current.image?.[0];
     onStatusUpdate?.(true);
     forceUpdate();
   }, [forceUpdate, onStatusUpdate]);
@@ -91,10 +107,10 @@ export const ArticleMetadata = forwardRef<
   }));
 
   const imageObject =
-    (article.current?.image?.[0] as Image).url?.[0] ||
+    (article.current?.image?.[0] as Image)?.url?.[0] ||
     (article.current?.image?.[0] as Link);
   const imageUri =
-    typeof imageObject === "string" ? imageObject : imageObject.href;
+    typeof imageObject === "string" ? imageObject : imageObject?.href;
 
   return (
     <CenteredArea>
@@ -107,6 +123,7 @@ export const ArticleMetadata = forwardRef<
       <SplashImage
         imageUri={imageUri}
         onNewImage={onNewImage}
+        onImageRemove={onImageRemove}
         isEditing={isEditing}
       />
       <EditableParagraph

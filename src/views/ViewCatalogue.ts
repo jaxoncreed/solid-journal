@@ -7,6 +7,8 @@ import {
   ArticleShapeType,
   OrderedCollectionShapeType,
 } from "../.ldo/activityPub.shapeTypes";
+import { SolidJournalHomepageShapeType } from "../.ldo/solidJournalConfig.shapeTypes";
+import { HomepageView } from "./homepageView/HomepageView";
 
 export interface ViewCatalogueRecord<Type extends LdoBase> {
   shapeType: ShapeType<Type>;
@@ -23,5 +25,9 @@ export const VIEW_CATALOGUE: ViewCatalogue = {
   "https://www.w3.org/ns/activitystreams#OrderedCollection": {
     shapeType: OrderedCollectionShapeType,
     Component: OrderedCollectionView,
+  },
+  "https://shaperepo.com/vocab/solid_journal#Homepage": {
+    shapeType: SolidJournalHomepageShapeType,
+    Component: HomepageView,
   },
 };

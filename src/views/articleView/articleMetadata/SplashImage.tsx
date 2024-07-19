@@ -1,6 +1,5 @@
 import {
   DeleteOutlined,
-  FileImageOutlined,
   PictureOutlined,
   RetweetOutlined,
 } from "@ant-design/icons";

@@ -3,7 +3,6 @@ import { useResource } from "@ldo/solid-react";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import useAsyncEffect from "use-async-effect";
 import { TipTapEditor } from "./TipTapEditor";
-import { Skeleton } from "antd";
 import { displayError } from "../../actions/displayError";
 
 export interface HtmlEditorMethods {
@@ -14,10 +13,11 @@ interface HtmlEditorProps {
   onStatusUpdate?: (hasUnsavedChanges: boolean) => void;
   uri: LeafUri;
   isEditing?: boolean;
+  placeholder?: string;
 }
 
 export const HtmlEditor = forwardRef<HtmlEditorMethods, HtmlEditorProps>(
-  ({ onStatusUpdate, uri, isEditing }, ref) => {
+  ({ onStatusUpdate, uri, isEditing, placeholder }, ref) => {
     /**
      * Fetch Content
      */
@@ -61,12 +61,13 @@ export const HtmlEditor = forwardRef<HtmlEditorMethods, HtmlEditorProps>(
     }));
 
     return html === undefined ? (
-      <Skeleton active />
+      <></>
     ) : (
       <TipTapEditor
         initialValue={html}
         onChange={onChange}
         isEditing={isEditing}
+        placeholder={placeholder}
       />
     );
   }

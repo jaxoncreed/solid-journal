@@ -8,14 +8,24 @@ import { ContextDefinition } from "jsonld";
 export const solidJournalConfigContext: ContextDefinition = {
   type: {
     "@id": "@type",
-    "@type": "https://shaperepo.com/vocab/solid_journal#SolidJournalConfig",
   },
+  SolidJournalConfig:
+    "https://shaperepo.com/vocab/solid_journal#SolidJournalConfig",
   blog: {
     "@id": "https://shaperepo.com/vocab/solid_journal#blog",
     "@type": "@id",
   },
   media: {
     "@id": "https://shaperepo.com/vocab/solid_journal#media",
+    "@type": "@id",
+  },
+  Homepage: "https://shaperepo.com/vocab/solid_journal#Homepage",
+  outbox: {
+    "@id": "https://shaperepo.com/vocab/solid_journal#outbox",
+    "@type": "@id",
+  },
+  content: {
+    "@id": "https://shaperepo.com/vocab/solid_journal#content",
     "@type": "@id",
   },
 };

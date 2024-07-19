@@ -22,8 +22,7 @@ export const Layout: FunctionComponent = () => {
         flexDirection: "column",
       }}>
       <Header />
-      <AntdLayout.Content
-        style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+      <AntdLayout.Content>
         <ViewRouter />
       </AntdLayout.Content>
     </AntdLayout>

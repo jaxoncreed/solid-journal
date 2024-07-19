@@ -12,6 +12,7 @@ import {
   ArticleMetadata,
   ArticleMetadataMethods,
 } from "./articleMetadata/ArticleMetadata";
+import { CenteredArea } from "../../layout/CenteredArea";
 
 export const ArticleView: FunctionComponent<ViewProps<Article>> = ({
   subject,
@@ -76,12 +77,15 @@ export const ArticleView: FunctionComponent<ViewProps<Article>> = ({
           ref={metadataRef}
         />
         {contentUri && (
-          <HtmlEditor
-            isEditing={hasWriteAccess}
-            uri={contentUri}
-            ref={htmlEditorRef}
-            onStatusUpdate={setDidContentUpdate}
-          />
+          <CenteredArea>
+            <HtmlEditor
+              isEditing={hasWriteAccess}
+              uri={contentUri}
+              ref={htmlEditorRef}
+              onStatusUpdate={setDidContentUpdate}
+              placeholder="Write your article..."
+            />
+          </CenteredArea>
         )}
       </div>
     </>

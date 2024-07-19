@@ -12,11 +12,30 @@ import { ContextDefinition } from "jsonld";
 export interface SolidJournalConfig {
   "@id"?: string;
   "@context"?: ContextDefinition;
-  type: string;
+  type: {
+    "@id": "SolidJournalConfig";
+  };
   blog: {
     "@id": string;
   };
   media: {
+    "@id": string;
+  };
+}
+
+/**
+ * SolidJournalHomepage Type
+ */
+export interface SolidJournalHomepage {
+  "@id"?: string;
+  "@context"?: ContextDefinition;
+  type: {
+    "@id": "Homepage";
+  };
+  outbox: {
+    "@id": string;
+  };
+  content: {
     "@id": string;
   };
 }

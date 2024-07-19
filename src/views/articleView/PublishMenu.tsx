@@ -30,6 +30,7 @@ export const PublishMenu: FunctionComponent<PublishMenuProps> = ({
           shape={isMobile ? "circle" : "round"}
           icon={<LockOutlined />}
           children={isMobile ? undefined : "Make Private"}
+          tooltip={isMobile ? "Make Private" : undefined}
         />
         <MenuButton
           type="primary"
@@ -38,6 +39,7 @@ export const PublishMenu: FunctionComponent<PublishMenuProps> = ({
           icon={<SaveOutlined />}
           onClick={onSaveClicked}
           children={isMobile ? undefined : "Save"}
+          tooltip={isMobile ? "Save" : undefined}
           disabled={!isSavable}
         />
       </div>

@@ -1,5 +1,5 @@
 import { FunctionComponent, useCallback, useState } from "react";
-import { MenuButton } from "../../common/MenuButton";
+import { MenuButton } from "./MenuButton";
 import { Editor } from "@tiptap/react";
 import { LinkOutlined } from "@ant-design/icons";
 import { Input, Modal } from "antd";

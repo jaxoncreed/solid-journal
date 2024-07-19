@@ -1,6 +1,6 @@
 import { Flex } from "antd";
 import { FunctionComponent, useCallback, useState } from "react";
-import { MenuButton } from "./common/MenuButton";
+import { MenuButton } from "../../shared/htmlEditor/contentMenu/MenuButton";
 import { LockOutlined, SaveOutlined } from "@ant-design/icons";
 import { useWindowSize } from "@uidotdev/usehooks";
 

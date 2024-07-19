@@ -20,7 +20,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Flex, Select } from "antd";
 import { FunctionComponent } from "react";
-import { MenuButton } from "../../common/MenuButton";
+import { MenuButton } from "./MenuButton";
 import { Editor } from "@tiptap/react";
 import { LinkButton } from "./LinkButton";
 import { ImageButton } from "./ImageButton";

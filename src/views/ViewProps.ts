@@ -1,8 +1,7 @@
 import { Leaf } from "@ldo/solid";
-import { PotentialSubject } from "../.ldo/potentialDocument.typings";
 
-export interface ViewProps {
-  subject?: PotentialSubject;
+export interface ViewProps<Type> {
+  subject?: Type;
   resource?: Leaf;
   hasWriteAccess?: boolean;
 }

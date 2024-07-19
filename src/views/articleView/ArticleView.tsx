@@ -1,97 +1,52 @@
-import {
-  FunctionComponent,
-  MutableRefObject,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, useCallback, useRef, useState } from "react";
 import { ViewProps } from "../ViewProps";
-import { ArticleMetadata } from "./articleMetadata/ArticleMetadata";
-import { ArticleContent } from "./articleContent/ArticleContent";
+import {
+  HtmlEditor,
+  HtmlEditorMethods,
+} from "../../shared/htmlEditor/HtmlEditor";
 import { Affix } from "antd";
 import { PublishMenu } from "./PublishMenu";
-import { useLdo } from "@ldo/solid-react";
-import { Article, Image, Link } from "../../.ldo/activityPub.typings";
-import { SolidLdoTransactionDataset } from "@ldo/solid";
-import { ArticleShapeType } from "../../.ldo/activityPub.shapeTypes";
-import { useForceUpdate } from "../../shared/hooks/useForceUpdate";
-import { displayError } from "../../actions/displayError";
+import { Article } from "../../.ldo/activityPub.typings";
+import { LeafUri } from "@ldo/solid";
 
-export const ArticleView: FunctionComponent<ViewProps> = ({
+export const ArticleView: FunctionComponent<ViewProps<Article>> = ({
   subject,
   hasWriteAccess,
   resource,
 }) => {
-  // All of this is really bad and ugly. It should be built into LDO
-  // There's a lot of forcing a rerender to get this to work with a transaction
-  // Dataset
-  const { dataset } = useLdo();
-  const forceUpdate = useForceUpdate();
-  const transactionDataset =
-    useRef<SolidLdoTransactionDataset>() as MutableRefObject<SolidLdoTransactionDataset>;
-  const initializeRefs = useCallback(() => {
-    console.log(initializeRefs);
-    if (subject && resource) {
-      transactionDataset.current = dataset.startTransaction();
-      article.current = transactionDataset.current
-        .usingType(ArticleShapeType)
-        .write(resource.uri)
-        .fromSubject(subject["@id"] as string);
-    }
-  }, [dataset, subject, resource]);
-  const article = useRef<Article>() as MutableRefObject<Article>;
-  if (!transactionDataset.current || !article.current) {
-    initializeRefs();
-  }
-
   const [didMetadataUpdate, setDidMetadataUpdate] = useState(false);
   const [didContentUpdate, setDidContentUpdate] = useState(false);
 
+  const article = subject as unknown as Article;
+
+  /**
+   * HtmlEditor
+   */
+  const htmlEditorRef = useRef<HtmlEditorMethods>(null);
+
+  /**
+   * Save
+   */
   const onSave = useCallback(async () => {
-    console.log("Saving");
-    console.log(transactionDataset.current.getChanges().added?.toString());
-    console.log(transactionDataset.current.getChanges().removed?.toString());
-    const result = await transactionDataset.current.commitToPod();
-    if (result.isError) {
-      displayError(result);
-      return;
-    }
-    initializeRefs();
-    setDidMetadataUpdate(false);
-    setDidContentUpdate(false);
-  }, [initializeRefs]);
-
-  const onTitleChange = useCallback(
-    (text: string) => {
-      article.current.name = [text];
-      setDidMetadataUpdate(true);
-      forceUpdate();
-    },
-    [forceUpdate]
-  );
-
-  const onSummaryChange = useCallback(
-    (text: string) => {
-      article.current.summary = [text];
-      setDidMetadataUpdate(true);
-      forceUpdate();
-    },
-    [forceUpdate]
-  );
-
-  const onNewImage = useCallback(() => {
-    // TODO
-    setDidMetadataUpdate(true);
-    forceUpdate();
-  }, [forceUpdate]);
+    await Promise.all([
+      (async () => {
+        if (didMetadataUpdate) {
+          // TODO
+          setDidMetadataUpdate(false);
+        }
+      })(),
+      (async () => {
+        if (didContentUpdate && htmlEditorRef.current?.save) {
+          await htmlEditorRef.current.save();
+          setDidContentUpdate(false);
+        }
+      })(),
+    ]);
+  }, [didMetadataUpdate, didContentUpdate]);
 
   if (!subject) return <></>;
 
-  const imageObject =
-    (article.current?.image?.[0] as Image).url?.[0] ||
-    (article.current?.image?.[0] as Link);
-  const imageUri =
-    typeof imageObject === "string" ? imageObject : imageObject.href;
+  const contentUri = article.url?.[0] as LeafUri | undefined;
 
   return (
     <>
@@ -104,7 +59,7 @@ export const ArticleView: FunctionComponent<ViewProps> = ({
         </Affix>
       )}
       <div style={{ zIndex: 0 }}>
-        <ArticleMetadata
+        {/* <ArticleMetadata
           titleValue={article.current?.name?.[0]}
           summaryValue={article.current?.summary?.[0]}
           imageUri={imageUri}
@@ -112,8 +67,15 @@ export const ArticleView: FunctionComponent<ViewProps> = ({
           onSummaryChange={onSummaryChange}
           onNewImage={onNewImage}
           isEditing={!!hasWriteAccess}
-        />
-        <ArticleContent isEditing={hasWriteAccess} />
+        /> */}
+        {contentUri && (
+          <HtmlEditor
+            isEditing={hasWriteAccess}
+            uri={contentUri}
+            ref={htmlEditorRef}
+            onStatusUpdate={setDidContentUpdate}
+          />
+        )}
       </div>
     </>
   );

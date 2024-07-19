@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { MenuButton } from "../../common/MenuButton";
+import { MenuButton } from "./MenuButton";
 import { Editor } from "@tiptap/react";
 import {
   CloudServerOutlined,
@@ -15,11 +15,11 @@ import {
   PictureOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Input, MenuProps, Modal } from "antd";
-import { useAppConfig } from "../../../../shared/providers/AppConfigProvider";
+import { useAppConfig } from "../../../shared/providers/AppConfigProvider";
 import { useResource } from "@ldo/solid-react";
 import { Container, LeafUri } from "@ldo/solid";
 import { uid } from "uid";
-import { displayError } from "../../../../actions/displayError";
+import { displayError } from "../../../actions/displayError";
 import { ImageLibraraySelector } from "./ImageLibrarySelector";
 
 interface ImageButtonProps {

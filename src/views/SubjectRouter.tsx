@@ -1,8 +1,10 @@
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent } from "react";
 import { PotentialSubject } from "../.ldo/potentialDocument.typings";
-import { VIEW_CATALOGUE } from "./ViewCatalogue";
+import { VIEW_CATALOGUE, ViewCatalogueRecord } from "./ViewCatalogue";
 import { UnknownView } from "./unknownView/UnknownView";
 import { Leaf } from "@ldo/solid";
+import { useSubject } from "@ldo/solid-react";
+import { LdoBase } from "@ldo/ldo";
 
 interface SubjectRouterProps {
   mainSubject: PotentialSubject;
@@ -15,19 +17,44 @@ export const SubjectRouter: FunctionComponent<SubjectRouterProps> = ({
   hasWriteAccess,
   resource,
 }) => {
-  const mainComponent = useMemo(() => {
-    const Component = VIEW_CATALOGUE[mainSubject?.type?.["@id"] || ""];
-    if (!Component) {
-      return <UnknownView />;
-    }
-    return (
-      <Component
-        subject={mainSubject}
-        hasWriteAccess={hasWriteAccess}
-        resource={resource}
-      />
-    );
-  }, [mainSubject, hasWriteAccess, resource]);
+  const result: ViewCatalogueRecord<any> | undefined =
+    VIEW_CATALOGUE[mainSubject?.type?.["@id"] || ""];
 
-  return <>{mainComponent}</>;
+  if (!result || !mainSubject["@id"]) {
+    return <UnknownView />;
+  }
+  return (
+    <SubjectTracker
+      subjectUri={mainSubject["@id"]}
+      viewCatalogueRecord={result}
+      resource={resource}
+      hasWriteAccess={hasWriteAccess}
+    />
+  );
+};
+
+interface SubjectTrackerProps<Type extends LdoBase> {
+  subjectUri: string;
+  viewCatalogueRecord: ViewCatalogueRecord<Type>;
+  resource?: Leaf;
+  hasWriteAccess?: boolean;
+}
+
+const SubjectTracker: FunctionComponent<SubjectTrackerProps<any>> = ({
+  subjectUri,
+  viewCatalogueRecord,
+  resource,
+  hasWriteAccess,
+}) => {
+  const { Component, shapeType } = viewCatalogueRecord;
+
+  const subject = useSubject(shapeType, subjectUri);
+
+  return (
+    <Component
+      subject={subject}
+      hasWriteAccess={hasWriteAccess}
+      resource={resource}
+    />
+  );
 };

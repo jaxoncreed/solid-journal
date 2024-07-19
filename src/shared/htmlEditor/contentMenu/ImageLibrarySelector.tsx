@@ -1,6 +1,6 @@
 import { ContainerUri } from "@ldo/solid";
 import { FunctionComponent } from "react";
-import { useAppConfig } from "../../../../shared/providers/AppConfigProvider";
+import { useAppConfig } from "../../../shared/providers/AppConfigProvider";
 import { useResource } from "@ldo/solid-react";
 import { Flex } from "antd";
 import { CheckOutlined } from "@ant-design/icons";

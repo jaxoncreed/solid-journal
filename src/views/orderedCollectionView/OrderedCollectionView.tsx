@@ -2,12 +2,12 @@ import { FunctionComponent } from "react";
 import { ViewProps } from "../ViewProps";
 import { useSubject } from "@ldo/solid-react";
 import { OrderedCollectionShapeType } from "../../.ldo/activityPub.shapeTypes";
-import { Link } from "../../.ldo/activityPub.typings";
+import { Link, OrderedCollection } from "../../.ldo/activityPub.typings";
 import { DocumentList } from "../../shared/documentList/DocumentList";
 
-export const OrderedCollectionView: FunctionComponent<ViewProps> = ({
-  subject,
-}) => {
+export const OrderedCollectionView: FunctionComponent<
+  ViewProps<OrderedCollection>
+> = ({ subject }) => {
   const orderedCollection = useSubject(
     OrderedCollectionShapeType,
     subject?.["@id"]

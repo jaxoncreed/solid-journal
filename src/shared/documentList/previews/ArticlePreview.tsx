@@ -3,9 +3,11 @@ import { FunctionComponent } from "react";
 import { ViewProps } from "../../../views/ViewProps";
 import { useSubject } from "@ldo/solid-react";
 import { ArticleShapeType } from "../../../.ldo/activityPub.shapeTypes";
-import { Image } from "../../../.ldo/activityPub.typings";
+import { Article, Image } from "../../../.ldo/activityPub.typings";
 
-export const ArticlePreview: FunctionComponent<ViewProps> = ({ subject }) => {
+export const ArticlePreview: FunctionComponent<ViewProps<Article>> = ({
+  subject,
+}) => {
   const article = useSubject(ArticleShapeType, subject?.["@id"]);
   if (!article) return <></>;
 

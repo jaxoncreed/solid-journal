@@ -12,14 +12,14 @@ export const ViewRouter: FunctionComponent = () => {
     window.location.href
   );
 
-  if (!subject) {
-    return <></>;
-  }
-
   if (resource?.type === "container") {
     return (
       <ContainerView container={resource} hasWriteAccess={hasWriteAccess} />
     );
+  }
+
+  if (!subject) {
+    return <></>;
   }
 
   return (

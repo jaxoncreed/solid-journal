@@ -27,7 +27,7 @@ function App() {
           },
         }}>
         <AppConfigProvider>
-          <RouterProvider router={router} />;
+          <RouterProvider router={router} />
           <ToastContainer />
         </AppConfigProvider>
       </ConfigProvider>

@@ -92,19 +92,19 @@ export const HomepageView: FunctionComponent<
           <div
             style={{
               flex: 1,
-              maxWidth: 550,
+              maxWidth: 400,
               padding: 8,
-              marginRight: 16,
+              marginRight: 64,
             }}>
             {contentComponent}
           </div>
           <div style={{ borderLeft: "1px solid black" }} />
           <div
             style={{
-              flex: 1,
-              maxWidth: 550,
+              flex: 2,
+              maxWidth: 600,
               padding: 8,
-              marginLeft: 16,
+              marginLeft: 64,
             }}>
             {recentPostsComponent}
           </div>

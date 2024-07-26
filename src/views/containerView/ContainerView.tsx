@@ -14,6 +14,7 @@ export const ContainerView: FunctionComponent<ContainerViewProps> = ({
   container,
   hasWriteAccess,
 }) => {
+  console.log("Container view");
   return (
     <>
       {hasWriteAccess && (
